@@ -2,6 +2,7 @@
 //desc: 用于计算SHA1值 参考了GIT中实现
 #include <cstdint>
 #include <cstddef>
+#include <string>
 namespace Jugg 
 {
 namespace common
@@ -12,9 +13,10 @@ namespace common
         SHA_Context();
         void write(const unsigned char *buf, size_t len);
         void final();
-      private:
-        void transform(const unsigned char* data);
-        
+        const unsigned char * getBuff() {return buf_;}
+        std::string getSHA1();
+      private: 
+        void transform(const unsigned char *data);
       private:
         unsigned char buf_[64];
         uint32_t state_[8];

@@ -2,6 +2,8 @@
 #include "missing.h"
 #include "../config/configuration.h"
 #include <cstring>
+#include <sstream>
+#include <iomanip>
 
 #define ROL(a, b) (((a) << (b)) | ((a) >> (32 - (b))))
 #define ROR(a, b) (((a) >> (b)) | ((a) << (32 - (b))))
@@ -256,5 +258,17 @@ void SHA_Context::final()
     }
 }
 
+std::string SHA_Context::getSHA1()
+{
+    std::ostringstream oss;
+    for (int i = 0; i < 20; i++)
+    {
+        unsigned char ch = buf_[i];
+        oss << std::hex
+            << std::setw(2) << std::setfill('0')
+            << static_cast<int>(ch);
+    }
+    return oss.str();
+}
 }
 }
