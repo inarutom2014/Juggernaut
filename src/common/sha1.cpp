@@ -14,12 +14,7 @@ namespace common
 {
 SHA_Context::SHA_Context()
 {
-    ::memset(this, 0, sizeof(SHA_Context));
-    state_[0] = 0x67452301;
-    state_[1] = 0xEFCDAB89;
-    state_[2] = 0x98BADCFE;
-    state_[3] = 0x10325476;
-    state_[4] = 0xC3D2E1F0;
+    reset();
 }
 
 void SHA_Context::transform(const unsigned char *data)
@@ -199,6 +194,13 @@ void SHA_Context::write(const unsigned char *buf, size_t len)
     memcpy(this->buf_, buf, len);
 }
 
+void SHA_Context::write(const std::string& content)
+{
+    const unsigned char *buf = (const unsigned char *)content.c_str();
+    size_t len = content.length();
+    write(buf, len);
+}
+
 void SHA_Context::final()
 {
     uint64_t bitcount = this->bytecount_ << 3;
@@ -256,6 +258,16 @@ void SHA_Context::final()
         write_swap32(p, this->state_[4]);
         p += 4;
     }
+}
+
+void SHA_Context::reset()
+{
+    memset(this, 0, sizeof(SHA_Context));
+    state_[0] = 0x67452301;
+    state_[1] = 0xEFCDAB89;
+    state_[2] = 0x98BADCFE;
+    state_[3] = 0x10325476;
+    state_[4] = 0xC3D2E1F0;
 }
 
 std::string SHA_Context::getSHA1()
