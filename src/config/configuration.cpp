@@ -1,6 +1,6 @@
 #include "configuration.h"
 
-namespace Jugg {
+namespace jugg {
 Config *Config::instance_s = nullptr;
 
 Config *Config::getInstance()

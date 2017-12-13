@@ -1,14 +1,14 @@
 #include "sha1.h"
 #include "missing.h"
 #include "../config/configuration.h"
-#include <cstring>
+#include <string.h>
 #include <sstream>
 #include <iomanip>
 
 #define ROL(a, b) (((a) << (b)) | ((a) >> (32 - (b))))
 #define ROR(a, b) (((a) >> (b)) | ((a) << (32 - (b))))
 
-namespace Jugg
+namespace jugg
 {
 namespace common
 {

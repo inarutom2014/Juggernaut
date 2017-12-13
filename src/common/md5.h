@@ -1,8 +1,8 @@
 #pragma once
-#include <cstdint>
-#include <cstddef>
+#include <stdint.h>
+#include <stddef.h>
 #include <string>
-namespace Jugg
+namespace jugg
 {
 namespace common
 {

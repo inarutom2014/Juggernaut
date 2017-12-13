@@ -4,7 +4,7 @@
 #include <sstream>
 #include <iomanip>
 
-namespace Jugg
+namespace jugg
 {
 namespace common
 {

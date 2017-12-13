@@ -1,10 +1,10 @@
 //author: lishuai
 //desc: 用于计算SHA1值
 #pragma once
-#include <cstdint>
-#include <cstddef>
+#include <stdint.h>
+#include <stddef.h>
 #include <string>
-namespace Jugg 
+namespace jugg 
 {
 namespace common
 {

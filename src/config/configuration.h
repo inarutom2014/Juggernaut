@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Jugg {
+namespace jugg {
     class Config {
     public:
       static Config *getInstance();
