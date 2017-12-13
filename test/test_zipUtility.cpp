@@ -29,9 +29,9 @@ int testCompress()
 {
     std::string content("The windowBits parameter is the base two logarithm of the window size (the size of the history buffer). It should be in the range 8..15 for this version of the library. Larger values of this parameter result in better compression at the expense of memory usage. The default value is 15 if deflateInit is used instead.");
     unsigned char compress[1024];
-    size_t compressLen = 1024;
+    uint32_t compressLen = 1024;
     unsigned char org[1024];
-    size_t orgLen = 1024;
+    uint32_t orgLen = 1024;
     int result = jugg::common::ZipUtility::Compress(compress, &compressLen, reinterpret_cast<const unsigned char *>(content.c_str()), content.length(), 8);
     if (result != 0)
     {
@@ -64,7 +64,7 @@ void testCopyFile()
 
 void testCompressFile()
 {
-    int result = jugg::common::ZipUtility::CompressFile("/Users/lishuai/Desktop/history.xml", "/Users/lishuai/Desktop/history_compress.xml", 8);
+    int result = jugg::common::ZipUtility::CompressFile("/Users/lishuai/Desktop/libiPhone-lib.a", "/Users/lishuai/Desktop/libiPhone-lib_compress.a", 8);
     if (result != jugg::common::ZipUtility::ZipResult_OK)
     {
         std::cout << "CompressFile False" << std::endl;
@@ -77,7 +77,7 @@ void testCompressFile()
 
 void testUncompressFile()
 {
-    int result = jugg::common::ZipUtility::UncompressFile("/Users/lishuai/Desktop/history_compress.xml", "/Users/lishuai/Desktop/history_orignal.xml");
+    int result = jugg::common::ZipUtility::UncompressFile("/Users/lishuai/Desktop/libiPhone-lib_compress.a", "/Users/lishuai/Desktop/libiPhone-lib_org.a");
     if (result != jugg::common::ZipUtility::ZipResult_OK)
     {
         std::cout << "UncompressFile False" << std::endl;
@@ -91,7 +91,7 @@ void testUncompressFile()
 int main()
 {
     // testCopyFile();
-    // testCompressFile();
-    // testUncompressFile();
+    testCompressFile();
+    testUncompressFile();
     return 0;
 }
