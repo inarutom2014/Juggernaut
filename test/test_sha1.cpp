@@ -1,5 +1,4 @@
 #include "../src/common/sha1.h"
-#include "../src/config/configuration.h"
 #include <stdio.h>
 #include <iostream>
 using jugg::common::SHA_Context;

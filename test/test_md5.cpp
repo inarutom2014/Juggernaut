@@ -1,5 +1,4 @@
 #include "../src/common/md5.h"
-#include "../src/config/configuration.h"
 #include <iostream>
 #include <cstdio>
 using jugg::common::Md5_Context;

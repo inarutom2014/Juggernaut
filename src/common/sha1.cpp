@@ -1,6 +1,6 @@
 #include "sha1.h"
 #include "missing.h"
-#include "../config/configuration.h"
+#include "util.h"
 #include <string.h>
 #include <sstream>
 #include <iomanip>
@@ -27,23 +27,15 @@ void SHA_Context::transform(const unsigned char *data)
     c = state_[2];
     d = state_[3];
     e = state_[4];
-    Config* config = Config::getInstance();
-    //这里需要实时获得大端小段，保证大端和小段获得的sha1值都是一样的
-    if (config->isBigEndian())
+
+    unsigned k;
+    for (k = 0; k < 16; k += 4)
     {
-        memcpy(x, data, sizeof(x));
-    }
-    else
-    {
-        unsigned k;
-        for (k = 0; k < 16; k += 4)
-        {
-            const unsigned char *p2 = data + k * 4;
-            x[k] = read_swap32(p2);
-            x[k + 1] = read_swap32(p2 + 4);
-            x[k + 2] = read_swap32(p2 + 8);
-            x[k + 3] = read_swap32(p2 + 12);
-        }
+        const unsigned char *p2 = data + k * 4;
+        x[k] = util::DecodeBigEndian32((const char *)p2);
+        x[k + 1] = util::DecodeBigEndian32((const char *)p2 + 4);
+        x[k + 2] = util::DecodeBigEndian32((const char *)p2 + 8);
+        x[k + 3] = util::DecodeBigEndian32((const char *)p2 + 12);
     }
 
 #define K1 0x5A827999L
@@ -231,33 +223,17 @@ void SHA_Context::final()
     transform(this->buf_);
 
     p = this->buf_;
-    Config *config = Config::getInstance();
-    if (config->isBigEndian())
-    {
-        *(uint32_t *)p = this->state_[0];
-        p += 4;
-        *(uint32_t *)p = this->state_[1];
-        p += 4;
-        *(uint32_t *)p = this->state_[2];
-        p += 4;
-        *(uint32_t *)p = this->state_[3];
-        p += 4;
-        *(uint32_t *)p = this->state_[4];
-        p += 4;
-    }
-    else
-    {
-        write_swap32(p, this->state_[0]);
-        p += 4;
-        write_swap32(p, this->state_[1]);
-        p += 4;
-        write_swap32(p, this->state_[2]);
-        p += 4;
-        write_swap32(p, this->state_[3]);
-        p += 4;
-        write_swap32(p, this->state_[4]);
-        p += 4;
-    }
+
+    util::EncodeBigEndian((char *)p, this->state_[0]);
+    p += 4;
+    util::EncodeBigEndian((char *)p, this->state_[1]);
+    p += 4;
+    util::EncodeBigEndian((char *)p, this->state_[2]);
+    p += 4;
+    util::EncodeBigEndian((char *)p, this->state_[3]);
+    p += 4;
+    util::EncodeBigEndian((char *)p, this->state_[4]);
+    p += 4;
 }
 
 void SHA_Context::reset()
